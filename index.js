@@ -1,33 +1,23 @@
 'use strict'
 
-const { MAX_RESTO_COUNT } = require("./src/constant");
+
+Array.prototype.random = function () {
+	return this[Math.floor((Math.random()*this.length))];
+}
+
+const { GENERATE_MAX_RESTO_COUNT, GENERATE_MAX_USER_COUNT, RETURN_UNIQUE_RESTO_COUNT } = require("./src/constant");
 const generateUserData = require("./script/generateUserData");
 const generateRestaurantCuisine = require("./script/generateRestaurantCuisine");
 
 const contoller = require("./src/controller");
 
 const getRestaurantRecommendation = function(userId, restaurants=[]) {
-	return contoller.recommendationEngine(userId, restaurants)
+	return contoller.recommendationEngine(userId, restaurants, RETURN_UNIQUE_RESTO_COUNT)
 }
 
-global.UserDetail = generateUserData();
-global.RestaurantDetails = generateRestaurantCuisine(MAX_RESTO_COUNT);
 
-console.log("RestaurantDetails: ", RestaurantDetails)
-console.log("UserDetail: ", UserDetail)
-const restaurantIds = getRestaurantRecommendation(UserDetail.userId, RestaurantDetails);
-console.log("rest: ", restaurantIds)
+global.UserDetails = generateUserData(GENERATE_MAX_USER_COUNT);
+let RestaurantDetails = generateRestaurantCuisine(GENERATE_MAX_RESTO_COUNT);
 
-
-
-// const args = process.argv.slice(2);
-
-// console.log("args: ", args);
-
-// let restaurantsFile = []
-
-// if(args[1]){
-// 	restaurantsFile = require(args[1]).restaurants
-// }
-
-// getRestaurantRecommendation(0 || args[0], []||restaurantsFile)
+const restaurantIds = getRestaurantRecommendation(UserDetails.random().userId, RestaurantDetails);
+console.log("rest: ", restaurantIds, restaurantIds.length)

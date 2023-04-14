@@ -1,10 +1,10 @@
 
 const {Restaurant} = require('../src/models')
 const {generateIds, randomDate} = require("../src/utils")
-const {CUISINE,COST_BRACKET} = require("../src/constant")
+const { CUISINE, COST_BRACKET, GENERATE_RESTO_CUISINE_OF_RESTO_TIMES } = require("../src/constant")
 
 Array.prototype.random = function () {
-  return this[Math.floor((Math.random()*this.length))];
+	return this[Math.floor((Math.random()*this.length))];
 }
 
 const restaurantsCuisine = []
@@ -45,7 +45,6 @@ const onboardedTime = () =>{
 
 
 const generateRestaurantCuisine = (noOfResto) => {
-	// const groupRest = {}
 	generatedRestaurantIds(noOfResto)
 	const restaurantObj = {
 		"restaurantId": getRestaurantIds,
@@ -56,7 +55,7 @@ const generateRestaurantCuisine = (noOfResto) => {
 		"onboardedTime": onboardedTime,
 	}
 
-	const noOfCousine = noOfResto*3;
+	const noOfCousine = noOfResto*GENERATE_RESTO_CUISINE_OF_RESTO_TIMES;
 	for(let i=0; i<noOfCousine; i++){
 		const tmp = {}
 		Object.keys(restaurantObj).forEach((key) => {
@@ -65,7 +64,7 @@ const generateRestaurantCuisine = (noOfResto) => {
 		tmpRes = new Restaurant(tmp.restaurantId, tmp.cuisine, tmp.costBracket, tmp.rating, tmp.isRecommended, tmp.onboardedTime)
 		restaurantsCuisine.push(tmpRes)
 	}
-	// console.log(restaurantsCuisine)
+
 	return restaurantsCuisine
 
 }

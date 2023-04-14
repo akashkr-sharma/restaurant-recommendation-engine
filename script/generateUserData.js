@@ -2,11 +2,6 @@ const { CUISINE, COST_BRACKET } = require("../src/constant")
 const { User, CuisineTracking, CostTracking } = require('../src/models')
 
 
-Array.prototype.random = function () {
-	return this[Math.floor((Math.random()*this.length))];
-}
-
-
 const totalNoOfOrder = () => Math.floor((Math.random()*(100-5+1)+5))
 
 const generateCuisineTracking = () => {
@@ -19,14 +14,22 @@ const generateCostTracking = () => {
 }
 
 
-
-const generateUserData = () => {
-	const cuisineTracking = generateCuisineTracking()
-	const costTracking = generateCostTracking()
-	const userObj = new User(cuisineTracking, costTracking)
-	userObj.generateUserId()
-	// console.log("userObj: ", userObj)
-	return userObj
+/**
+ * generateUserData will generate multiple user based on maxcount 
+ * maxCount is equivalant to GENERATE_MAX_USER_COUNT in constant file
+ * */
+const generateUserData = (maxCount) => {
+	const userObjs = []
+	for (let i=0; i< maxCount; i++){
+		const cuisineTracking = generateCuisineTracking()
+		const costTracking = generateCostTracking()
+		const userObj = new User(cuisineTracking, costTracking)
+		userObj.generateUserId()
+		// console.log("userObj: ", userObj)
+		// return userObj
+		userObjs.push(userObj)
+	}
+	return userObjs
 }
 
 // generateUserData()
