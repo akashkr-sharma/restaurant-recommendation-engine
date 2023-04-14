@@ -1,6 +1,12 @@
 const {getPriorityFilterType} = require("./helper")
 
 
+/***
+ * filter user from user list by userId and store the value in global variable to easy access
+ * store the restaurants in global value to easy access
+ * calling getPriorityFilterType to get restaurant's ids as per the given condition
+ * tmp is used to concatinate the array 
+ * */
 const recommendationEngine = (userId, restaurants, maxCount) => {
     global.UserDetail = UserDetails.find( user => user.userId == userId)
     global.RestaurantDetails = restaurants

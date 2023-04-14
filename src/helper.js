@@ -1,13 +1,16 @@
 
 
-
+/***
+ * get all Featured restaurants of primary cuisine and primary cost bracket. 
+ * If none, then all featured restaurants of primary cuisine, secondary cost and secondary cuisine, primary cost
+ * */
 const sortByPrimaryCuisineCost = (maxCount) => {
     console.log("RestaurantDetails1: ", RestaurantDetails.length)
     const primaryCuisine = UserDetail.cuisines[0].type
     const primaryCost = UserDetail.costs[0].type
     const secondaryCuisine = UserDetail.cuisines.slice(1, 2)
     const secondaryCost = UserDetail.costs.slice(1, 2)
-    // console.log(secondaryCost, secondaryCuisine)
+
     return (
         RestaurantDetails
             .filter((resto, idx) => {
@@ -31,6 +34,9 @@ const sortByPrimaryCuisineCost = (maxCount) => {
     .splice(0, maxCount)
 }
 
+/***
+ * All restaurants of Primary cuisine, primary cost bracket with rating >= 4
+ * */
 const sortByPrimaryCuisineCostRating4 = (maxCount) => {
     console.log("RestaurantDetails2: ", RestaurantDetails.length)
     const primaryCuisine = UserDetail.cuisines[0].type
@@ -50,6 +56,10 @@ const sortByPrimaryCuisineCostRating4 = (maxCount) => {
 
 }
 
+
+/**
+ * All restaurants of Primary cuisine, secondary cost bracket with rating >= 4.5
+ * */
 const sortByPrimaryCuisineSecondaryCostRating4_5 = (maxCount) => {
     console.log("RestaurantDetails3: ", RestaurantDetails.length)
     const primaryCuisine = UserDetail.cuisines[0].type
@@ -70,6 +80,9 @@ const sortByPrimaryCuisineSecondaryCostRating4_5 = (maxCount) => {
 }
 
 
+/**
+ * All restaurants of secondary cuisine, primary cost bracket with rating >= 4.5
+ * */
 const sortBySecondaryCuisinePrimaryCostRating4_5 = (maxCount) => {
     console.log("RestaurantDetails4: ", RestaurantDetails.length)
     const primaryCost = UserDetail.costs[0].type
@@ -90,6 +103,9 @@ const sortBySecondaryCuisinePrimaryCostRating4_5 = (maxCount) => {
 }
 
 
+/**
+ * Top 4 newly created restaurants by rating
+ * */
 const top4NewlyCreatedRestaurantByRating = (maxCount) => {
     console.log("RestaurantDetails5: ", RestaurantDetails.length)
     const today = new Date()
@@ -109,6 +125,10 @@ const top4NewlyCreatedRestaurantByRating = (maxCount) => {
         .splice(0, maxCount)
 }
 
+
+/**
+ * All restaurants of Primary cuisine, primary cost bracket with rating < 4
+ * */
 const sortByPrimaryCuisineCostRating4Less = (maxCount) => {
     console.log("RestaurantDetails6: ", RestaurantDetails.length)
     const primaryCuisine = UserDetail.cuisines[0].type
@@ -129,6 +149,9 @@ const sortByPrimaryCuisineCostRating4Less = (maxCount) => {
 }
 
 
+/**
+ * All restaurants of Primary cuisine, secondary cost bracket with rating < 4.5
+ * */
 const sortByPrimaryCuisineSecondaryCostRating4_5Less = (maxCount) => {
     console.log("RestaurantDetails7: ", RestaurantDetails.length)
     const primaryCuisine = UserDetail.cuisines[0].type
@@ -149,6 +172,9 @@ const sortByPrimaryCuisineSecondaryCostRating4_5Less = (maxCount) => {
 }
 
 
+/**
+ * All restaurants of secondary cuisine, primary cost bracket with rating < 4.5
+ * */
 const sortBySecondaryCuisinePrimaryCostRating4_5Less = (maxCount) => {
     console.log("RestaurantDetails8: ", RestaurantDetails.length)
     const primaryCost = UserDetail.costs[0].type
@@ -169,6 +195,9 @@ const sortBySecondaryCuisinePrimaryCostRating4_5Less = (maxCount) => {
 }
 
 
+/**
+ * All restaurants of any cuisine, any cost bracket
+ * */
 const max100RestoAnyCuisineCost = (maxCount) => {
     console.log("RestaurantDetails9: ", RestaurantDetails.length)
     return RestaurantDetails.splice(0, maxCount).map( resto => resto.restaurantId)
