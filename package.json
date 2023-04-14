@@ -1,0 +1,12 @@
+{
+  "name": "gameberrylabs.com",
+  "version": "1.0.0",
+  "description": "building a recommendation engine for your food delivery app per user",
+  "main": "index.js",
+  "repository": "git@github.com:akashkr-sharma/restaurant-recommendation-engine.git",
+  "author": "Akash Sharma <akashkr.sharma369@gmail.com>",
+  "license": "none",
+  "dependencies": {
+    "uuidv4": "^6.2.13"
+  }
+}
