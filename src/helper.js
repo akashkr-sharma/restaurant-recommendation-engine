@@ -4,6 +4,69 @@
  * get all Featured restaurants of primary cuisine and primary cost bracket. 
  * If none, then all featured restaurants of primary cuisine, secondary cost and secondary cuisine, primary cost
  * */
+
+const operators = {
+    "==": function(rv, lv){
+        return rv == lv
+    },
+    "!=": function(rv, lv){
+        return rv != lv
+    },
+    ">=": function(rv, lv){
+        return rv>=lv
+    },
+    "<=": function(rv, lv){
+        return rv<=lv
+    },
+    ">": function(rv, lv){
+        return rv > lv
+    },
+    "<": function(rv, lv){
+        return rv < lv
+    },
+    "in": function(rv, lv){
+        return lv.includes(rv)
+    },
+    "bool": function(rv){
+        return rv
+    }
+
+}
+
+
+
+
+const getUniqueRestaurantIds = (restaurantIds) => {
+    return restaurantIds.filter((value, index, array) => array.indexOf(value) === index)
+}
+
+const filterRestaurants = (model, filters, maxCount) => {
+    try{
+        const filterData = model
+            .filter((resto, idx) => {
+                let condition;
+                filters.forEach((filter, idx) => {
+                    const res = operators[filter.op](resto[filter.key], filter.value);
+                    if(idx==0){
+                        condition = res;
+                    }else{
+                        condition = condition && res
+                    }
+                })
+                if(condition){
+                    RestaurantDetails.splice(idx, 1)
+                    return resto
+                }
+            })
+            .map( resto => resto.restaurantId)
+
+        return getUniqueRestaurantIds(filterData).splice(0, maxCount)
+    }catch(e){
+        console.log(`error in filterRestaurants: ${err.message}`);
+        throw(err)
+    }
+}
+
 const sortByPrimaryCuisineCost = (maxCount) => {
     console.log("RestaurantDetails1: ", RestaurantDetails.length)
     const primaryCuisine = UserDetail.cuisines[0].type
