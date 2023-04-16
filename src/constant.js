@@ -8,6 +8,7 @@ const GENERATE_MAX_RESTO_COUNT = 1000
 const RETURN_UNIQUE_RESTO_COUNT = 100 // maximum no of unique restaurant as per the given requirement 
 const GENERATE_MAX_USER_COUNT = 5
 const GENERATE_RESTO_CUISINE_OF_RESTO_TIMES = 3 // to generate more cuisine in the restaurant this multiplier is added
+const K_TOP_NEW_RESTAURANT = 4
 
 module.exports = {
 	CUISINE,
@@ -15,5 +16,6 @@ module.exports = {
 	GENERATE_MAX_RESTO_COUNT,
 	RETURN_UNIQUE_RESTO_COUNT,
 	GENERATE_MAX_USER_COUNT,
-	GENERATE_RESTO_CUISINE_OF_RESTO_TIMES
+	GENERATE_RESTO_CUISINE_OF_RESTO_TIMES,
+	K_TOP_NEW_RESTAURANT
 }

@@ -1,4 +1,4 @@
-
+const {K_TOP_NEW_RESTAURANT} = require('./constant');
 
 /***
  * get all Featured restaurants of primary cuisine and primary cost bracket. 
@@ -104,9 +104,9 @@ const sortBySecondaryCuisinePrimaryCostRating4_5 = (maxCount) => {
 
 
 /**
- * Top 4 newly created restaurants by rating
+ * Top k (4) newly created restaurants by rating
  * */
-const top4NewlyCreatedRestaurantByRating = (maxCount) => {
+const topKNewlyCreatedRestaurantByRating = (maxCount, k=K_TOP_NEW_RESTAURANT) => {
     console.log("RestaurantDetails5: ", RestaurantDetails.length)
     const today = new Date()
     const newRestaurantDate = new Date()
@@ -120,9 +120,10 @@ const top4NewlyCreatedRestaurantByRating = (maxCount) => {
                 return resto
             }
         })
+        .sort( (a, b) => b.rating-a.rating )
         .map( resto => resto.restaurantId)
         .filter((value, index, array) => array.indexOf(value) === index)
-        .splice(0, maxCount)
+        .splice(0, k)
 }
 
 
@@ -215,7 +216,7 @@ const getPriorityFilterType = [
     sortByPrimaryCuisineCostRating4,
     sortByPrimaryCuisineSecondaryCostRating4_5,
     sortBySecondaryCuisinePrimaryCostRating4_5,
-    top4NewlyCreatedRestaurantByRating,
+    topKNewlyCreatedRestaurantByRating,
     sortByPrimaryCuisineCostRating4Less,
     sortByPrimaryCuisineSecondaryCostRating4_5Less,
     sortBySecondaryCuisinePrimaryCostRating4_5Less,
