@@ -199,7 +199,7 @@ const sortBySecondaryCuisinePrimaryCostRating4_5Less = (maxCount) => {
 /**
  * All restaurants of any cuisine, any cost bracket
  * */
-const max100RestoAnyCuisineCost = (maxCount) => {
+const maxKRestoAnyCuisineCost = (maxCount) => {
     console.log("RestaurantDetails9: ", RestaurantDetails.length)
     return RestaurantDetails.splice(0, maxCount).map( resto => resto.restaurantId)
 }
@@ -220,7 +220,7 @@ const getPriorityFilterType = [
     sortByPrimaryCuisineCostRating4Less,
     sortByPrimaryCuisineSecondaryCostRating4_5Less,
     sortBySecondaryCuisinePrimaryCostRating4_5Less,
-    max100RestoAnyCuisineCost
+    maxKRestoAnyCuisineCost
 ]
 
 
