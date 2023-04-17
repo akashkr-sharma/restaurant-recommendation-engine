@@ -1,34 +1,28 @@
 const {K_TOP_NEW_RESTAURANT} = require('./constant');
+const { Restaurant } = require('./models');
+const {restaurantFilterQuery} = require('./queryFormatter');
 
-/***
- * get all Featured restaurants of primary cuisine and primary cost bracket. 
- * If none, then all featured restaurants of primary cuisine, secondary cost and secondary cuisine, primary cost
- * */
 
-const operators = {
-    "==": function(rv, lv){
-        return rv == lv
-    },
-    "!=": function(rv, lv){
-        return rv != lv
-    },
-    ">=": function(rv, lv){
-        return rv>=lv
-    },
-    "<=": function(rv, lv){
-        return rv<=lv
-    },
-    ">": function(rv, lv){
-        return rv > lv
-    },
-    "<": function(rv, lv){
-        return rv < lv
-    },
-    "in": function(rv, lv){
-        return lv.includes(rv)
-    },
-    "bool": function(rv){
-        return rv
+const operators = function(rv, lv=null){
+    switch(op){
+        case "==":
+            return rv == lv;
+        case "!=":
+            return rv != lv;
+        case ">=":
+            return rv>=lv;
+        case "<=":
+            return rv<=lv;
+        case ">":
+            return rv > lv;
+        case "<":
+            return rv < lv;
+        case "in":
+            return lv.includes(rv);
+        case "bool":
+            return rv;
+        default:
+            throw new Error("Invalid operator");
     }
 
 }
@@ -42,20 +36,22 @@ const getUniqueRestaurantIds = (restaurantIds) => {
 
 const filterRestaurants = (model, filters, maxCount) => {
     try{
+        // const count = maxCount;
         const filterData = model
-            .filter((resto, idx) => {
+            .filter((data, idx) => {
                 let condition;
                 filters.forEach((filter, idx) => {
-                    const res = operators[filter.op](resto[filter.key], filter.value);
+                    const res = operators[filter.op](data[filter.key], filter.value);
                     if(idx==0){
                         condition = res;
                     }else{
                         condition = condition && res
                     }
                 })
-                if(condition){
+                if(condition && count){
                     RestaurantDetails.splice(idx, 1)
-                    return resto
+                    // count--;
+                    return data
                 }
             })
             .map( resto => resto.restaurantId)
@@ -67,6 +63,20 @@ const filterRestaurants = (model, filters, maxCount) => {
     }
 }
 
+
+
+const getPriorityFilterType = [
+    filterRestaurants(RestaurantDetails, restaurantFilterQuery.sortByPrimaryCuisineCost_part1, maxCount) || 
+    filterRestaurants(RestaurantDetails, restaurantFilterQuery.sortByPrimaryCuisineCost_part2, maxCount) || 
+    filterRestaurants(RestaurantDetails, restaurantFilterQuery.sortByPrimaryCuisineCost_part3, maxCount),
+
+]
+
+
+/***
+ * get all Featured restaurants of primary cuisine and primary cost bracket. 
+ * If none, then all featured restaurants of primary cuisine, secondary cost and secondary cuisine, primary cost
+ * */
 const sortByPrimaryCuisineCost = (maxCount) => {
     console.log("RestaurantDetails1: ", RestaurantDetails.length)
     const primaryCuisine = UserDetail.cuisines[0].type
@@ -274,17 +284,17 @@ const max100RestoAnyCuisineCost = (maxCount) => {
  * getPriorityFilterType array give us the liability to change the priority order of our filter logic
  */
 
-const getPriorityFilterType = [
-    sortByPrimaryCuisineCost,
-    sortByPrimaryCuisineCostRating4,
-    sortByPrimaryCuisineSecondaryCostRating4_5,
-    sortBySecondaryCuisinePrimaryCostRating4_5,
-    topKNewlyCreatedRestaurantByRating,
-    sortByPrimaryCuisineCostRating4Less,
-    sortByPrimaryCuisineSecondaryCostRating4_5Less,
-    sortBySecondaryCuisinePrimaryCostRating4_5Less,
-    max100RestoAnyCuisineCost
-]
+// const getPriorityFilterType = [
+//     sortByPrimaryCuisineCost,
+//     sortByPrimaryCuisineCostRating4,
+//     sortByPrimaryCuisineSecondaryCostRating4_5,
+//     sortBySecondaryCuisinePrimaryCostRating4_5,
+//     topKNewlyCreatedRestaurantByRating,
+//     sortByPrimaryCuisineCostRating4Less,
+//     sortByPrimaryCuisineSecondaryCostRating4_5Less,
+//     sortBySecondaryCuisinePrimaryCostRating4_5Less,
+//     max100RestoAnyCuisineCost
+// ]
 
 
 module.exports = {
