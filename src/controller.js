@@ -26,7 +26,8 @@ const recommendationEngine = (userId, restaurants, maxCount) => {
 
     let tmp = []
     for(let i=0; i<restoIdsArr.length; i++)
-        tmp = tmp.concat(restoIdsArr[i])
+        if(restoIdsArr[i].length)
+            tmp = tmp.concat(restoIdsArr[i])
 
     return tmp
 }
